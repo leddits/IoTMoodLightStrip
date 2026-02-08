@@ -3,7 +3,7 @@ String version = "2.0";
 
 // timing count
 int count = 0;
-int term = 1000;
+int term = 1500;
 
 // wifi setting
 const char *ssid_ap = "AIMoodLight";

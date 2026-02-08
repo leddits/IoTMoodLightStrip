@@ -10,10 +10,12 @@
 #include "credential.h"
 #include "definitions.h"
 #include "externalFunc.h"
+#include <FastLED.h>
+
+CRGB leds[18];
 
 void setup()
 {
-
   Serial.begin(9600);
 
   pinMode(LEDSPIN, OUTPUT);
@@ -30,40 +32,34 @@ void setup()
   DisplaySetup();
   GetExternalIP();
 
-  pixels.begin();
-  pixels.show();
+  FastLED.addLeds<WS2812B, LEDSPIN, GRB>(leds, NUMPIXELS);
+  FastLED.setBrightness(50);
+  FastLED.setMaxPowerInVoltsAndMilliamps(5, 1500); // Set power limit of LED strip to 5V, 1500mA
+  FastLED.clear();
+
 }
 
 void loop()
 {
-  pixels.setBrightness(0);
-
-  if (count % term == 0)
+  EVERY_N_SECONDS(5)
   {
-    pixels.setBrightness(100);
-    /* if (Firebase.getString(ledData, "/Controller/" + macID + "/ledData"))
+    if (Firebase.getString(ledData, "/Controller/" + macID + "/ledData"))
     {
-      Serial.println(ledData.stringData());
       if (ledData.stringData())
       {
         mg = ledData.stringData().substring(1, 4).toInt();
         mr = ledData.stringData().substring(4, 7).toInt();
         mb = ledData.stringData().substring(7, 10).toInt();
         uint8_t brightness = ledData.stringData().substring(10, 13).toInt();
-        Serial.println(ledData.stringData());
-        Serial.println(mr);
-        Serial.println(mg);
-        Serial.println(mb);
-        Serial.println(brightness);
-        for (int i = 0; i < NUMPIXELS; i++)
-        {
-          pixels.setPixelColor(i, pixels.Color(mr, mg, mb));
-        }
-        pixels.setBrightness(brightness);
-        // delay(1000);
+        FastLED.setBrightness(brightness);
       }
-    } */
+    }
   }
-  pixels.show();
-  count++;
+
+  uint16_t sinBeat = beatsin16(20, 0, NUMPIXELS - 1, 0, 0);
+
+  leds[sinBeat] = CRGB(mg, mr, mb);
+
+  fadeLightBy(leds, NUMPIXELS, 10);
+  FastLED.show();
 }
