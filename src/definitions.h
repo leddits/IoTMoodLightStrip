@@ -19,9 +19,9 @@ FirebaseData firebaseData;
 FirebaseData ledData;
 
 // neopixel setting
-#define LEDSPIN 2                                                                  
-int NUMPIXELS = 18;
-Adafruit_NeoPixel pixels(NUMPIXELS, LEDSPIN, NEO_RGB + NEO_KHZ800);
+#define LEDSPIN 14  // D5 (GPIO 14)                                                              
+int NUMPIXELS = 100;
+Adafruit_NeoPixel pixels(NUMPIXELS, LEDSPIN, NEO_GRB + NEO_KHZ800);  // GRB 순서로 변경
 int mr = 0;
 int mg = 0;
 int mb = 0;
