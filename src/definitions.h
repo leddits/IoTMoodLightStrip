@@ -5,23 +5,19 @@ String version = "2.0";
 int count = 0;
 int term = 1500;
 
-// wifi setting
+// wifi setting (AP mode)
 const char *ssid_ap = "AIMoodLight";
-const char *password_ap = "";
-WiFiManager wifiManager;
+const char *password_ap = "0405";
 
 // check mac address
 ESP8266WiFiClass Wifi8266;
 String macID = Wifi8266.macAddress();
 
-// firebase setting
-FirebaseData firebaseData;
-FirebaseData ledData;
-
 // neopixel setting
-#define LEDSPIN 14  // D5 (GPIO 14)                                                              
-int NUMPIXELS = 100;
-Adafruit_NeoPixel pixels(NUMPIXELS, LEDSPIN, NEO_GRB + NEO_KHZ800);  // GRB 순서로 변경
+#define LEDSPIN 14  // D5 (GPIO 14)
+#define MAX_LEDS 200  // 최대 LED 개수 (배열 크기용)                                                           
+int NUMPIXELS = 173;  // 실제 사용할 LED 개수
+// Adafruit_NeoPixel pixels(NUMPIXELS, LEDSPIN, NEO_RGB + NEO_KHZ800);  // FastLED 사용으로 주석 처리
 int mr = 0;
 int mg = 0;
 int mb = 0;
